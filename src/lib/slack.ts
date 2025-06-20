@@ -75,6 +75,9 @@ export function searchChannels(channels: Channel[], query: string): Channel[] {
     return channels;
   }
   
+  // Split query into multiple words for fuzzy search
+  const queryWords = normalizedQuery.split(/\s+/).filter(word => word.length > 0);
+  
   return channels.filter(channel => {
     // Search in multiple fields
     const searchTargets = [
@@ -84,8 +87,48 @@ export function searchChannels(channels: Channel[], query: string): Channel[] {
       channel.topic
     ].filter(Boolean).map(s => s!.toLowerCase());
     
-    // Check if any field contains the query
-    return searchTargets.some(target => target.includes(normalizedQuery));
+    // Create a combined search string
+    const combinedTarget = searchTargets.join(' ');
+    
+    // Check if ALL query words are found in any of the fields
+    // This allows for flexible word order like fzf
+    return queryWords.every(word => {
+      return searchTargets.some(target => target.includes(word)) || 
+             combinedTarget.includes(word);
+    });
+  }).sort((a, b) => {
+    // Sort by relevance: prioritize exact matches and matches at the beginning
+    const aName = (a.name || '').toLowerCase();
+    const bName = (b.name || '').toLowerCase();
+    
+    // Exact match gets highest priority
+    if (aName === normalizedQuery) return -1;
+    if (bName === normalizedQuery) return 1;
+    
+    // Starting with query gets second priority
+    if (aName.startsWith(normalizedQuery)) return -1;
+    if (bName.startsWith(normalizedQuery)) return 1;
+    
+    // Calculate match score based on word positions
+    const getScore = (channel: Channel) => {
+      const name = (channel.name || '').toLowerCase();
+      let score = 0;
+      queryWords.forEach((word, index) => {
+        const pos = name.indexOf(word);
+        if (pos === 0) score += 100; // Word at start
+        else if (pos > 0) score += 50; // Word found
+        score -= index * 10; // Penalty for word order
+      });
+      return score;
+    };
+    
+    const aScore = getScore(a);
+    const bScore = getScore(b);
+    
+    if (aScore !== bScore) return bScore - aScore;
+    
+    // Fall back to alphabetical
+    return aName.localeCompare(bName);
   });
 }
 

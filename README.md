@@ -7,6 +7,7 @@ RaycastからSlackチャンネルを素早く検索して開けるようにす�
 ## 🚀 機能
 
 - 🔍 全てのSlackチャンネルをインクリメンタルサーチ
+- 🎯 **fzf風の複数ワード検索** - スペース区切りで複数キーワードを指定可能
 - 💬 パブリックチャンネル、プライベートチャンネル、DM、グループDMに対応
 - 🚀 Slackアプリまたはブラウザで直接開く
 - 📋 チャンネル名、ID、WebURLをコピー
@@ -22,6 +23,14 @@ cd raycast-slack-channel-opener
 
 # 依存関係をインストール
 npm install
+
+# Raycastにインストール（推奨）
+npm run deploy
+# → 自動的にRaycastの拡張機能フォルダにインストール
+# → Raycastで Cmd+K を押して拡張機能をリロード
+
+# または開発モードで起動
+npm run dev
 ```
 
 ## 🛠️ セットアップ
@@ -82,6 +91,9 @@ npm install
 1. Raycastを開く（`Cmd+Space`）
 2. 「Search Slack Channels」と入力
 3. チャンネル名を入力して検索
+   - **複数ワード検索**: スペース区切りで複数のキーワードを入力可能
+   - 例: `dev backend` → "dev"と"backend"を両方含むチャンネルを検索
+   - 例: `john dm` → "john"との DM を検索
 4. `Enter`でSlackアプリで開く、`Cmd+O`でブラウザで開く
 
 ### キーボードショートカット
