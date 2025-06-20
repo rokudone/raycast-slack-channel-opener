@@ -1,0 +1,45 @@
+{
+  "$schema": "https://www.raycast.com/schemas/extension.json",
+  "name": "slack-channel-opener",
+  "title": "Open Slack Channels",
+  "description": "Search and open Slack channels",
+  "icon": "command-icon.png",
+  "author": "takuma",
+  "categories": ["Applications", "Productivity"],
+  "license": "MIT",
+  "commands": [
+    {
+      "name": "index",
+      "title": "Search Slack Channels",
+      "subtitle": "Open channels in Slack app",
+      "description": "Search and open Slack channels with incremental search",
+      "mode": "view"
+    },
+    {
+      "name": "update-channels",
+      "title": "Update Channel List",
+      "subtitle": "Update from clipboard",
+      "description": "Update channel list from clipboard data",
+      "mode": "view"
+    }
+  ],
+  "dependencies": {
+    "@raycast/api": "^1.64.0",
+    "@raycast/utils": "^1.10.1"
+  },
+  "devDependencies": {
+    "@raycast/eslint-config": "^1.0.8",
+    "@types/node": "20.8.10",
+    "@types/react": "18.2.27",
+    "eslint": "^8.51.0",
+    "prettier": "^3.0.3",
+    "typescript": "^5.2.2"
+  },
+  "scripts": {
+    "build": "ray build -e dist",
+    "dev": "ray develop",
+    "fix-lint": "ray lint --fix",
+    "lint": "ray lint",
+    "publish": "npx @raycast/api@latest publish"
+  }
+}
