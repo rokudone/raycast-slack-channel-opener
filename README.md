@@ -2,7 +2,7 @@
 
 RaycastからSlackチャンネルを素早く検索して開けるようにする拡張機能です。
 
-![image](https://github.com/user-attachments/assets/7407ec8d-30c3-4ecd-a88a-38a68e3ad2b2)
+![スクリーンショット 2025-06-20 13 27 47](https://github.com/user-attachments/assets/7348bea7-9ab0-4f47-982a-971697c9e423)
 
 ## 🚀 機能
 
